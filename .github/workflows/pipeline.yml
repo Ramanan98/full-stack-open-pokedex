@@ -9,13 +9,13 @@ on:
     types: [opened, synchronize]
 
 jobs:
-    simple_deployment_pipeline:
+  simple_deployment_pipeline:
     if: |
       !(github.event_name == 'pull_request' &&
         (contains(github.event.pull_request.title, '#skip') ||
-         (contains(github.event.pull_request.body, '#skip')))
-   runs-on: ubuntu-latest
-   steps:
+         contains(github.event.pull_request.body, '#skip')))
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
@@ -45,12 +45,12 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         run: curl "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
 
-    tag_release:
+  tag_release:
     needs: [simple_deployment_pipeline]
     if: |
       github.event_name == 'push' &&
       github.ref == 'refs/heads/main' &&
-      !(contains(github.event.head_commit.message, '#skip'))
+      !contains(github.event.head_commit.message, '#skip')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
