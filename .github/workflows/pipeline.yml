@@ -41,10 +41,19 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         run: curl "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
 
+  tag_release:
+    needs: [simple_deployment_pipeline]
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Bump version and push tag
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         uses: anothrNick/github-tag-action@1.73.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
-          DRY_RUN: "true"
+          TAG_PREFIX: v
+          DRY_RUN: "false"
