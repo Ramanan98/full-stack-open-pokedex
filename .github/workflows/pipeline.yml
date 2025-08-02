@@ -40,3 +40,11 @@ jobs:
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' }}
         run: curl "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+
+      - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        uses: anothrNick/github-tag-action@1.73.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+          DRY_RUN: "true"
