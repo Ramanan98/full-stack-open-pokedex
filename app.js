@@ -6,12 +6,10 @@ const app = express()
 const PORT = process.env.PORT || 8080
 
 app.get('/version', (req, res) => {
-  res.send('4') // change this string to ensure a new version deployed
+  res.send('5') // change this string to ensure a new version deployed
 })
 
 app.get('/health', (req, res) => {
-  // eslint-disable-next-line no-constant-condition
-  if (true) throw('error...  ')
   res.send('ok')
 })
 
