@@ -50,12 +50,11 @@ jobs:
 
       - name: Notify Discord on Failure
         if: failure()
-        uses: rjstone/discord-webhook-notify@v2.2.1
+        uses: Ilshidur/action-discord@0.4.0
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: error
-          text: Build failed
-          details: |
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          message: |
+            Build failed
             commit ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.event.head_commit.id }} by ${{ github.event.head_commit.author.name }} broke the build :(
 
   tag_release:
@@ -79,11 +78,10 @@ jobs:
           DRY_RUN: "false"
 
       - name: Notify Discord on Deployment Success
-        uses: rjstone/discord-webhook-notify@v2.2.1
         if: success()
+        uses: Ilshidur/action-discord@0.4.0
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: info
-          text: A new version of Pokedex is deployed
-          description: |
-            to: ${{ secrets.DEPLOY_URL }} by ${{ github.event.head_commit.author.name }}
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          message: |
+            A new version of Pokedex is deployed
+            to ${{ secrets.DEPLOY_URL }} by ${{ github.event.head_commit.author.name }}
