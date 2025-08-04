@@ -13,3 +13,6 @@ Start by running `npm install` inside the project folder
 `npm run eslint` to run eslint
 `npm run build` to make a production build
 `npm run start-prod` to run your production build
+
+Exercises 11.20 and 11.21 in redux-anecdotes repo
+https://github.com/Ramanan98/redux-anecdotes
